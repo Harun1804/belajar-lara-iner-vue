@@ -13,10 +13,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <Link class="nav-link active" aria-current="page" :href="route('home')" >Home</Link>
+                    <Link class="nav-link" aria-current="page" :href="route('home')" >Home</Link>
                 </li>
                 <li class="nav-item">
-                    <Link class="nav-link" :href="route('about')">about</Link>
+                    <Link class="nav-link" :href="route('about')">About</Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link" :href="route('auth.register.page')">Register</Link>
                 </li>
             </ul>
             <form class="d-flex" role="search">
