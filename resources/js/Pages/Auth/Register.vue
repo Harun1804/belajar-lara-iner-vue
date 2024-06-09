@@ -1,5 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import TextInput from '../../Components/Elements/TextInput.vue';
 
 const form = useForm({
     name: '',
@@ -21,25 +22,10 @@ const register = () => {
 <template>
     <div class="container my-5">
         <form @submit.prevent="register()">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="bandung bodowoso" v-model="form.name">
-                <small class="form-text text-danger">{{ form.errors.name }}</small>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" v-model="form.email">
-                <small class="form-text text-danger">{{ form.errors.email }}</small>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="********" v-model="form.password">
-                <small class="form-text text-danger">{{ form.errors.password }}</small>
-            </div>
-            <div class="mb-3">
-                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" placeholder="********" v-model="form.password_confirmation">
-            </div>
+            <TextInput id="name" name="Fullname" v-model="form.name" :message="form.errors.name" placeholder="Ex. Brandon"/>
+            <TextInput id="email" name="Email Address" type="email" v-model="form.email" :message="form.errors.email" placeholder="Ex. example@mail.test"/>
+            <TextInput id="password" name="Password" type="password" v-model="form.password" :message="form.errors.password" placeholder="********"/>
+            <TextInput id="password_confirmation" name="Password Confirmation" type="password" v-model="form.password_confirmation" placeholder="********"/>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary float-end">Submit</button>
             </div>
