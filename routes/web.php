@@ -10,6 +10,8 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::prefix('auth')->name('auth.')->controller(AuthController::class)->group(function () {
+    Route::get('/login', 'loginPage')->name('login.page');
+    Route::post('/login', 'login')->name('login');
     Route::get('/register', 'registerPage')->name('register.page');
     Route::post('/register', 'register')->name('register');
 });

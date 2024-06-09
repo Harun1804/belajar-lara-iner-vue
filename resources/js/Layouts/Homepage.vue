@@ -11,21 +11,18 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <Link class="nav-link" aria-current="page" :href="route('home')" >Home</Link>
-                </li>
-                <li class="nav-item">
-                    <Link class="nav-link" :href="route('about')">About</Link>
-                </li>
-                <li class="nav-item">
-                    <Link class="nav-link" :href="route('auth.register.page')">Register</Link>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <Link class="nav-link" aria-current="page" :href="route('home')" >Home</Link>
+                    </li>
+                    <li class="nav-item">
+                        <Link class="nav-link" :href="route('about')">About</Link>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <Link :href="route('auth.login.page')" class="btn btn-info text-white mx-2">Login</Link>
+                    <Link :href="route('auth.register.page')" class="btn btn-primary">Register</Link>
+                </div>
             </div>
         </div>
     </nav>
