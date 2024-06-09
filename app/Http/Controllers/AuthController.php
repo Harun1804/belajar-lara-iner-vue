@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AuthController extends Controller
+class AuthController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth', only: ['logout']),
+            new Middleware('guest', except: ['logout'])
+        ];
+    }
+
     public function loginPage()
     {
         return Inertia::render('Auth/Login');
@@ -23,7 +34,7 @@ class AuthController extends Controller
             Auth::attempt($request->only(['email', 'password']), $request->validated('remember'));
             $request->session()->regenerate();
             DB::commit();
-            return redirect()->route('home')->with('success', 'User login successfully');
+            return redirect()->route('admin.dashboard')->with('success', 'User login successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage(), $e->getCode());
@@ -42,10 +53,18 @@ class AuthController extends Controller
             $user = User::create($request->validated());
             Auth::login($user);
             DB::commit();
-            return redirect()->route('home')->with('success', 'User registered successfully');
+            return redirect()->route('admin.dashboard')->with('success', 'User registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('home')->with('success', 'User logout successfully');
     }
 }

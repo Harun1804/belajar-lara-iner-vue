@@ -12,16 +12,28 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <Link class="nav-link" aria-current="page" :href="route('home')" >Home</Link>
-                    </li>
-                    <li class="nav-item">
-                        <Link class="nav-link" :href="route('about')">About</Link>
-                    </li>
+                    <div v-if="$page.props.auth.user">
+                        <li class="nav-item">
+                            <Link class="nav-link" aria-current="page" :href="route('home')">Dashboard</Link>
+                        </li>
+                    </div>
+                    <div v-else>
+                        <li class="nav-item">
+                            <Link class="nav-link" aria-current="page" :href="route('home')" >Home</Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" :href="route('about')">About</Link>
+                        </li>
+                    </div>
                 </ul>
                 <div class="d-flex">
-                    <Link :href="route('auth.login.page')" class="btn btn-info text-white mx-2">Login</Link>
-                    <Link :href="route('auth.register.page')" class="btn btn-primary">Register</Link>
+                    <div v-if="$page.props.auth.user">
+                        <Link :href="route('auth.logout')" class="btn btn-danger text-white" method="post" as="button" type="button">Logout</Link>
+                    </div>
+                    <div v-else>
+                        <Link :href="route('auth.login.page')" class="btn btn-info text-white mx-2">Login</Link>
+                        <Link :href="route('auth.register.page')" class="btn btn-primary">Register</Link>
+                    </div>
                 </div>
             </div>
         </div>
