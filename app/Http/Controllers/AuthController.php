@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class AuthController extends Controller implements HasMiddleware
 {
@@ -51,6 +52,12 @@ class AuthController extends Controller implements HasMiddleware
         DB::beginTransaction();
         try {
             $user = User::create($request->validated());
+            if ($request->hasFile('avatar')) {
+                $avatar = Storage::disk('public')->put('avatars', $request->file('avatar'));
+                $user->update([
+                    'avatar' => $avatar,
+                ]);
+            }
             Auth::login($user);
             DB::commit();
             return redirect()->route('admin.dashboard')->with('success', 'User registered successfully');

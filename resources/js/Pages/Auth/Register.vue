@@ -6,8 +6,16 @@ const form = useForm({
     name: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    avatar: null,
+    preview: null,
 })
+
+const addAvatar = (e) => {
+    const file = e.target.files[0];
+    form.avatar = file;
+    form.preview = URL.createObjectURL(file);
+}
 
 const register = () => {
     form.post(route('auth.register', {
@@ -22,6 +30,10 @@ const register = () => {
 <template>
     <div class="container my-5">
         <form @submit.prevent="register()">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="avatar">Avatar</label>
+                <input type="file" class="form-control" id="avatar" @input="addAvatar">
+            </div>
             <TextInput id="name" name="Fullname" v-model="form.name" :message="form.errors.name" placeholder="Ex. Brandon"/>
             <TextInput id="email" name="Email Address" type="email" v-model="form.email" :message="form.errors.email" placeholder="Ex. example@mail.test"/>
             <TextInput id="password" name="Password" type="password" v-model="form.password" :message="form.errors.password" placeholder="********"/>
